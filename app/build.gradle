@@ -1,0 +1,132 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+ext.service_module_version = '0.1.12'
+ext.data_module_version = '0.1.19'
+ext.retrofitVersion = '2.3.0'
+ext.okHttpLoggingVersion = '3.9.0'
+ext.googlePlayVersion = '11.6.0'
+ext.supportLibraryVersion = '26.0.2'
+ext.glideVersion = '4.3.0'
+ext.rxLifeCycleVersion = '2.2.0'
+
+android {
+    compileSdkVersion 26
+    buildToolsVersion "26.0.2"
+    defaultConfig {
+        applicationId "com.project.demoroofimon"
+        minSdkVersion 19
+        targetSdkVersion 26
+        versionCode 1
+        versionName "0.9.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
+        vectorDrawables.useSupportLibrary true
+        resConfigs "en", "th"
+        ndk {
+            abiFilters "armeabi", "armeabi-v7a", "x86", "mips"
+        }
+    }
+    packagingOptions {
+        exclude 'META-INF/LGPL2.1'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/app_release.kotlin_module'
+    }
+    dexOptions {
+        preDexLibraries false
+        javaMaxHeapSize "4g"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+
+    implementation "org.jetbrains.anko:anko-commons:$anko_version"
+    implementation "org.jetbrains.anko:anko-appcompat-v7:$anko_version"
+    implementation "org.jetbrains.anko:anko-coroutines:$anko_version"
+
+    implementation 'com.android.support:multidex:1.0.2'
+    implementation "com.android.support:support-v4:$supportLibraryVersion"
+    implementation "com.android.support:appcompat-v7:$supportLibraryVersion"
+    implementation "com.android.support:cardview-v7:$supportLibraryVersion"
+    implementation "com.android.support:design:$supportLibraryVersion"
+    implementation "com.android.support:support-annotations:$supportLibraryVersion"
+    implementation "com.android.support:support-vector-drawable:$supportLibraryVersion"
+    implementation "com.android.support:animated-vector-drawable:$supportLibraryVersion"
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+
+    implementation 'com.google.zxing:core:3.3.1'
+    implementation 'me.dm7.barcodescanner:zxing:1.9.8'
+
+    implementation 'com.google.code.gson:gson:2.8.2'
+    implementation "com.google.firebase:firebase-core:$googlePlayVersion"
+    implementation "com.google.firebase:firebase-messaging:$googlePlayVersion"
+    implementation "com.github.bumptech.glide:glide:$glideVersion"
+    implementation "com.github.bumptech.glide:okhttp3-integration:$glideVersion"
+    kapt "com.github.bumptech.glide:compiler:$glideVersion"
+
+
+    implementation("com.github.hotchemi:permissionsdispatcher:2.4.0") {
+        exclude module: "support-v13"
+    }
+    kapt 'com.github.hotchemi:permissionsdispatcher-processor:2.4.0'
+
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.3'
+    implementation 'io.reactivex.rxjava2:rxkotlin:2.1.0'
+
+    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okHttpLoggingVersion"
+
+    implementation "com.trello.rxlifecycle2:rxlifecycle:$rxLifeCycleVersion"
+    implementation "com.trello.rxlifecycle2:rxlifecycle-android:$rxLifeCycleVersion"
+    implementation "com.trello.rxlifecycle2:rxlifecycle-components:$rxLifeCycleVersion"
+    implementation "com.trello.rxlifecycle2:rxlifecycle-kotlin:$rxLifeCycleVersion"
+
+    implementation 'joda-time:joda-time:2.9.9'
+    implementation 'org.bouncycastle:bcprov-jdk15on:1.58'
+    implementation 'com.scottyab:rootbeer-lib:0.0.6'
+    testImplementation 'junit:junit:4.12'
+    testImplementation 'pl.pragmatists:JUnitParams:1.0.5'
+    testImplementation "org.robolectric:robolectric:3.5.1"
+
+    testImplementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    testImplementation "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
+    testImplementation "com.nhaarman:mockito-kotlin:1.1.0"
+    testImplementation 'org.amshove.kluent:kluent:1.14'
+
+    androidTestImplementation 'com.android.support.test:runner:1.0.1'
+    androidTestImplementation 'com.android.support.test:rules:1.0.1'
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:3.0.1', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    androidTestImplementation 'com.android.support.test.espresso:espresso-intents:3.0.1'
+    androidTestImplementation "com.android.support:support-annotations:$supportLibraryVersion"
+}
+
+configurations.all {
+    resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+}
+kotlin {
+    experimental {
+        coroutines "enable"
+    }
+}
+
+kapt {
+    correctErrorTypes = true
+}
+
